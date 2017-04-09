@@ -1,0 +1,30 @@
+---
+title: "Developing Data Products WK2"
+author: "Simon C"
+date: "9 April 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+traffic_sig <- read.csv('TrafficSignals.csv')
+```
+
+
+#A First Leaflet Map
+This is the first go at a Leaflet Map using the locations of traffic signals in Manchester, UK.
+
+```{r}
+library(leaflet)
+myMap <- leaflet(data=traffic_sig) %>% addTiles() %>% 
+  setView(lat=53.4808, lng=-2.2426, zoom=10) %>%
+  addMarkers(lat = ~Latitude, ~Longitude,clusterOptions = markerClusterOptions(), popup= ~Description)
+
+myMap
+
+
+```
+
