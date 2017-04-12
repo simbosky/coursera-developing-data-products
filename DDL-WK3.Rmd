@@ -1,0 +1,42 @@
+---
+title: "First-Plotly-Plot"
+author: "Simon C"
+date: "12 April 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#knitr::opts_knit$set(root.dir = "~/coursera/Assignments/DDP/")
+```
+
+```{r}
+library(plotly)
+```
+
+## A first plotly plot
+Using plotly to explore the traffic signals in Manchester data set. Firstly read the data.  
+
+```{r}
+traffic <- read.csv("TrafficSignals.csv")
+
+```
+
+A quick tidy.  
+
+```{r}
+traffic$Crossing_Facility <- gsub("P(ed|ED).*","PEDESTRIAN", traffic$Crossing_Facility)
+traffic$Crossing_Facility <- gsub("P(uf|UF).*","PUFFIN", traffic$Crossing_Facility)
+traffic$Crossing_Facility[traffic$Crossing_Facility==""] <- "NA"
+
+```
+
+And now plot!  
+
+```{r}
+qTraffic <- qplot(Type, data = traffic, colour=Crossing_Facility,fill=Crossing_Facility, xlab="Crossing Type", ylab="Number")+theme(axis.text.x = element_text(angle=90))+labs(fill="Facility", colour="Facility")
+ggplotly(qTraffic)
+```
+
+
+
